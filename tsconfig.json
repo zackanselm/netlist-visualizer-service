@@ -2,9 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["esnext"],
+    "lib": ["ES2022"],
     "strict": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -26,6 +26,6 @@
     "baseUrl": "."
 
   },
-  "include": ["server/**/*.ts"],
+  "include": ["server/**/*.ts", "server/common/env.ts"],
   "exclude": ["node_modules"]
 }
