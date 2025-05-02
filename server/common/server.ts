@@ -8,6 +8,11 @@ import l from './logger';
 
 import errorHandler from '../api/middlewares/error.handler';
 import * as OpenApiValidator from 'express-openapi-validator';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import * as connection from '../store/connection';
+
+// Do this, otherwise node does not load the module
+connection;
 
 const app = express();
 

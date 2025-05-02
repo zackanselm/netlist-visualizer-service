@@ -1,6 +1,6 @@
 {
   "execMap": {
-    "ts": "ts-node"
+    "ts": "tsx"
   },
   "ignore": ["test/**/*.ts", "test/**/*.spec.ts", ".git", "node_modules"],
   "watch": [
