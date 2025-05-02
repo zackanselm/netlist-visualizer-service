@@ -1,4 +1,4 @@
-import './common/env.js';
+import './common/env';
 import Server from './common/server';
 import routes from './routes';
 
