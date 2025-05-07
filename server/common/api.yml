@@ -6,52 +6,76 @@ info:
 servers:
 - url: /api/v1
 tags:
-- name: Examples
-  description: Simple example endpoints
+- name: Users
+  description: Simple user endpoints
 - name: Specification
   description: The swagger API specification
 paths:
-  /examples:
+  /users:
     get:
       tags:
-      - Examples
-      description: Fetch all examples
+      - Users
+      description: Fetch all users
       responses:
         200:
-          description: Returns all examples
+          description: Returns all users
           content: {}
     post:
       tags:
-      - Examples
-      description: Create a new example
+      - Users
+      description: Create a new user
       requestBody:
-        description: an example
+        description: an user
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleBody'
+              $ref: '#/components/schemas/UserBody'
         required: true
       responses:
-        200:
-          description: Returns all examples
+        201:
+          description: Returns the id of the created user
           content: {}
-  /examples/{id}:
+  /users/{id}:
     get:
       tags:
-      - Examples
+      - Users
       parameters:
       - name: id
         in: path
-        description: The id of the example to retrieve
+        description: The id of the user to retrieve
         required: true
         schema:
-          type: integer
+          type: string
       responses:
         200:
-          description: Return the example with the specified id
+          description: Return the user with the specified id
           content: {}
         404:
-          description: Example not found
+          description: User not found
+          content: {}
+    put:
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: The id of the user to retrieve
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: an user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserBody'
+        required: true
+      responses:
+        200:
+          description: Return the user
+          content: {}
+        404:
+          description: User not found
           content: {}
   /spec:
     get:
@@ -63,12 +87,12 @@ paths:
           content: {}
 components:
   schemas:
-    ExampleBody:
-      title: example
+    UserBody:
+      title: user
       required:
-      - name
+      - email
       type: object
       properties:
-        name:
+        email:
           type: string
-          example: no_stress
+          example: test@email.com
