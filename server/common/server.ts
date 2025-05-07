@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import os from 'os';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import l from './logger';
 
 import errorHandler from '../api/middlewares/error.handler';
@@ -20,6 +21,8 @@ export default class ExpressServer {
   private routes: (app: Application) => void;
   constructor() {
     const root = path.normalize(__dirname + '/../..');
+    // Allow any origin for sake of demo
+    app.use(cors());
     app.use(bodyParser.json({ limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(
       bodyParser.urlencoded({

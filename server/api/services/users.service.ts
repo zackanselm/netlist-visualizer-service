@@ -13,6 +13,15 @@ export class UsersService {
     return users;
   }
 
+  async byEmail(email: string): Promise<User | null> {
+    L.debug(`fetch user with email ${email}`);
+
+    const query = { email };
+    const user = (await collections?.users?.findOne(query)) || null;
+
+    return user;
+  }
+
   async byId(id: string): Promise<User | null> {
     L.debug(`fetch user with id ${id}`);
 
@@ -25,7 +34,7 @@ export class UsersService {
   async create(newUser: User): Promise<InsertOneResult<User> | undefined> {
     const result = await collections?.users?.insertOne(newUser);
 
-    L.info(`create user: ${result}`);
+    L.debug(`create user: ${result}`);
 
     return result;
   }

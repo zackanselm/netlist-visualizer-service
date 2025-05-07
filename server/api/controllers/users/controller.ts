@@ -10,6 +10,21 @@ export class Controller {
     return UsersService.all().then((users) => res.status(200).send(users));
   }
 
+  byEmail(
+    req: Request,
+    res: Response
+  ): Promise<Response<any, Record<string, any>> | User> {
+    return UsersService.byEmail(req.body.email).then((result) => {
+      if (result) {
+        return res.status(200).send(result);
+      }
+
+      return res
+        .status(404)
+        .send(`Unable to find user with email: ${req.body.email}`);
+    });
+  }
+
   byId(
     req: Request,
     res: Response
@@ -29,15 +44,31 @@ export class Controller {
     req: Request,
     res: Response
   ): Promise<Response<any, Record<string, any>>> {
-    return UsersService.create(req.body).then((result) => {
-      if (result) {
-        return res
-          .status(201)
-          .send(`Successfully created a new user with id ${result.insertedId}`);
-      }
+    return UsersService.create(req.body)
+      .then((result) => {
+        if (result) {
+          return res
+            .status(201)
+            .send(
+              `Successfully created a new user with id ${result.insertedId}`
+            );
+        }
 
-      return res.status(500).send('Failed to create a new user.');
-    });
+        return res.status(500).send('Failed to create a new user.');
+      })
+      .catch((err) => {
+        if (err?.message?.includes('duplicate key error')) {
+          return UsersService.byEmail(req.body.email).then((result) => {
+            if (result) {
+              return res.status(200).send(result);
+            }
+
+            return res.status(500).send('Failed to create a new user.');
+          });
+        }
+
+        throw err;
+      });
   }
 
   update(

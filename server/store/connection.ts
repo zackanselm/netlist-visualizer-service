@@ -22,6 +22,7 @@ client
     const db = client.db(process.env.MONGO_DB_NAME);
 
     const usersCollection = db.collection<User>('users');
+    usersCollection.createIndex({ email: 1 }, { unique: true });
 
     collections.users = usersCollection;
 
