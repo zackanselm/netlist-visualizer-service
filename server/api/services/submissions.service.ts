@@ -4,11 +4,11 @@ import L from '../../common/logger';
 import { collections } from '../../store/connection';
 
 export class SubmissionsService {
-  async all(): Promise<Submission[]> {
+  async all(user_id: string): Promise<Submission[]> {
     const submissions =
-      (await collections?.submissions?.find({}).toArray()) || [];
+      (await collections?.submissions?.find({ user_id }).toArray()) || [];
 
-    L.debug(submissions, 'fetch all submissions');
+    L.debug(submissions, 'fetch all submissions for user');
 
     return submissions;
   }

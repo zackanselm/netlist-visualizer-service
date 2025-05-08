@@ -4,11 +4,15 @@ import SubmissionsService from '../../services/submissions.service';
 
 export class Controller {
   all(
-    _: Request,
+    req: Request,
     res: Response
   ): Promise<Response<any, Record<string, any>> | Submission[]> {
-    return SubmissionsService.all().then((submissions) =>
-      res.status(200).send(submissions)
+    const userId = req.headers['x-netlist-userid'];
+    if (!userId) {
+      return new Promise((resolve) => resolve(res.status(401).send()));
+    }
+    return SubmissionsService.all(userId?.toString() || '').then(
+      (submissions) => res.status(200).send(submissions)
     );
   }
 

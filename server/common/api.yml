@@ -114,10 +114,10 @@ components:
     SubmissionBody:
       title: submission
       required:
-      - netlistJson
+      - netlist_json
       type: object
       properties:
-        netlistJson:
+        netlist_json:
           type: string
           example: []
     UserBody:

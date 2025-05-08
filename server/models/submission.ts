@@ -1,7 +1,8 @@
 import { ObjectId } from 'mongodb';
 
 export default interface Submission {
-  netlistJson: string;
+  netlist_json: string;
+  user_id: string;
   created_at: Date;
   updated_at: Date;
   id?: ObjectId;
