@@ -11,6 +11,30 @@ tags:
 - name: Specification
   description: The swagger API specification
 paths:
+  /submissions:
+    get:
+      tags:
+      - Submissions
+      description: Fetch all submissions
+      responses:
+        200:
+          description: Returns all submissions
+          content: {}
+    post:
+      tags:
+      - Submissions
+      description: Create a new submission
+      requestBody:
+        description: an submission
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionBody'
+        required: true
+      responses:
+        201:
+          description: Returns the id of the created submission
+          content: {}
   /users:
     get:
       tags:
@@ -87,6 +111,15 @@ paths:
           content: {}
 components:
   schemas:
+    SubmissionBody:
+      title: submission
+      required:
+      - netlistJson
+      type: object
+      properties:
+        netlistJson:
+          type: string
+          example: []
     UserBody:
       title: user
       required:

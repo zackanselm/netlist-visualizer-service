@@ -5,7 +5,6 @@ import { collections } from '../../store/connection';
 
 export class UsersService {
   async all(): Promise<User[]> {
-    // Call find with an empty filter object, meaning it returns all documents in the collection. Saves as Game array to take advantage of types
     const users = (await collections?.users?.find({}).toArray()) || [];
 
     L.debug(users, 'fetch all users');
@@ -32,9 +31,13 @@ export class UsersService {
   }
 
   async create(newUser: User): Promise<InsertOneResult<User> | undefined> {
-    const result = await collections?.users?.insertOne(newUser);
+    const result = await collections?.users?.insertOne({
+      ...newUser,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
 
-    L.debug(`create user: ${result}`);
+    L.debug(`create user: ${JSON.stringify(result)}`);
 
     return result;
   }
@@ -45,10 +48,13 @@ export class UsersService {
   ): Promise<UpdateResult<User> | undefined> {
     const query = { _id: new ObjectId(id) };
     const result = await collections?.users?.updateOne(query, {
-      $set: updatedUser,
+      $set: {
+        ...updatedUser,
+        updated_at: new Date(),
+      },
     });
 
-    L.debug(`update user: ${result}`);
+    L.debug(`update user: ${JSON.stringify(result)}`);
 
     return result;
   }

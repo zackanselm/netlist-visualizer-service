@@ -47,11 +47,9 @@ export class Controller {
     return UsersService.create(req.body)
       .then((result) => {
         if (result) {
-          return res
-            .status(201)
-            .send(
-              `Successfully created a new user with id ${result.insertedId}`
-            );
+          return res.status(201).send({
+            id: result.insertedId,
+          });
         }
 
         return res.status(500).send('Failed to create a new user.');

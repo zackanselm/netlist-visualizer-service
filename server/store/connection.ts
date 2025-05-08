@@ -1,8 +1,12 @@
 import * as mongoDB from 'mongodb';
 import l from '../common/logger';
 import User from '../models/user';
+import Submission from '../models/submission';
 
-export const collections: { users?: mongoDB.Collection<User> } = {};
+export const collections: {
+  users?: mongoDB.Collection<User>;
+  submissions?: mongoDB.Collection<Submission>;
+} = {};
 
 // eslint-disable-next-line prettier/prettier
 const connectionString = `${process.env.MONGO_URI || ''}`;
@@ -24,7 +28,10 @@ client
     const usersCollection = db.collection<User>('users');
     usersCollection.createIndex({ email: 1 }, { unique: true });
 
+    const submissionsCollection = db.collection<Submission>('submissions');
+
     collections.users = usersCollection;
+    collections.submissions = submissionsCollection;
 
     l.info('Connected to MongoDB!');
   })
